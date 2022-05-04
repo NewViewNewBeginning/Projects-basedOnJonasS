@@ -16,10 +16,11 @@ function again() {
 	msg.textContent = "Start guessing...";
 	score.textContent = "20";
 	numBox.textContent = "?";
+	body.style.background = "black";
+	document.querySelector(".guess").value = "";
 }
 function check() {
 	let guessIn = Number(document.querySelector(".guess").value);
-
 	if (!guessIn) {
 		msg.textContent = "💥 No number 💥";
 	} else if (guessIn === secretNum) {
