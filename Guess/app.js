@@ -5,15 +5,23 @@ const btnCheck = document.querySelector(".check");
 const btnAgain = document.querySelector(".again");
 let numBox = document.querySelector(".number");
 let score = document.querySelector(".score");
-const highscore = document.querySelector(".higscore");
+let highscoreEl = document.querySelector(".highscore");
+console.log(highscoreEl)
 
-const secretNum = Math.floor(Math.random() * 20) + 1;
+let secretNum = Math.floor(Math.random() * 20) + 1;
 console.log(secretNum);
-
+let highscore = 0;
 let startingScore = 20;
 
+const diplayMsg = (text) => {
+	msg.textContent = text
+}
+
+
 function again() {
-	msg.textContent = "Start guessing...";
+	secretNum = Math.floor(Math.random() * 20) + 1;
+	console.log(`new num ${secretNum}`)
+	diplayMsg("Start guessing...")
 	score.textContent = "20";
 	numBox.textContent = "?";
 	body.style.background = "black";
@@ -24,12 +32,18 @@ function check() {
 	if (!guessIn) {
 		msg.textContent = "💥 No number 💥";
 	} else if (guessIn === secretNum) {
-		msg.textContent = "🌟🌟🌟 Correct Number!!!";
+		diplayMsg("🌟🌟🌟 Correct Number!!!");
 		numBox.textContent = secretNum;
 		body.style.background = "#60b347";
+		if (startingScore> highscore) {
+			score = highscoreEl.textContent
+			console.log(score, highscoreEl.textContent)
+			
+			
+		}
 	} else if (guessIn > secretNum) {
 		if (startingScore > 1) {
-			msg.textContent = "Your number is too big";
+			displayMsg("Your number is too big");
 			startingScore--;
 			score.textContent = startingScore;
 		} else {
@@ -38,11 +52,11 @@ function check() {
 		}
 	} else if (guessIn < secretNum) {
 		if (startingScore > 1) {
-			msg.textContent = "Your number is too small";
+			displayMsg("Your number is too small");
 			startingScore--;
 			score.textContent = startingScore;
 		} else {
-			msg.textContent = "You lost the game 💀💀💀";
+			displayMsg("You lost the game 💀💀💀");
 			score.textContent = 0;
 		}
 	}
