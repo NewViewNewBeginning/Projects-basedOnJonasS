@@ -3,61 +3,55 @@ const body = document.querySelector("body");
 let msg = document.querySelector(".message");
 const btnCheck = document.querySelector(".check");
 const btnAgain = document.querySelector(".again");
-let numBox = document.querySelector(".number");
-let score = document.querySelector(".score");
-let highscoreEl = document.querySelector(".highscore");
-console.log(highscoreEl)
+const numBox = document.querySelector(".number");
+const scoreEl = document.querySelector(".score");
+const highscoreEl = document.querySelector(".highscore");
 
 let secretNum = Math.floor(Math.random() * 20) + 1;
 console.log(secretNum);
+
 let highscore = 0;
-let startingScore = 20;
+let score = 20;
 
-const diplayMsg = (text) => {
-	msg.textContent = text
-}
-
+const displayMsg = text => {
+	msg.textContent = text;
+};
 
 function again() {
+	score = 20
 	secretNum = Math.floor(Math.random() * 20) + 1;
-	console.log(`new num ${secretNum}`)
-	diplayMsg("Start guessing...")
-	score.textContent = "20";
+	console.log(`new num ${secretNum}`);
+	displayMsg("Start guessing...");
+	scoreEl.textContent = score;
 	numBox.textContent = "?";
 	body.style.background = "black";
 	document.querySelector(".guess").value = "";
 }
+
 function check() {
-	let guessIn = Number(document.querySelector(".guess").value);
+	const guessIn = Number(document.querySelector(".guess").value);
 	if (!guessIn) {
-		msg.textContent = "💥 No number 💥";
+		displayMsg("💥 No number 💥");
 	} else if (guessIn === secretNum) {
-		diplayMsg("🌟🌟🌟 Correct Number!!!");
+		displayMsg("🌟🌟🌟 Correct Number!!!");
 		numBox.textContent = secretNum;
 		body.style.background = "#60b347";
-		if (startingScore> highscore) {
-			score = highscoreEl.textContent
-			console.log(score, highscoreEl.textContent)
-			
-			
+		if (score > highscore) {
+			highscore = score;
+			highscoreEl.textContent = highscore;
 		}
-	} else if (guessIn > secretNum) {
-		if (startingScore > 1) {
-			displayMsg("Your number is too big");
-			startingScore--;
-			score.textContent = startingScore;
-		} else {
-			msg.textContent = "You lost the game 💀💀💀";
-			score.textContent = 0;
-		}
-	} else if (guessIn < secretNum) {
-		if (startingScore > 1) {
-			displayMsg("Your number is too small");
-			startingScore--;
-			score.textContent = startingScore;
+	} else if (Number(guessIn.value) !== secretNum) {
+		if (score > 1) {
+			displayMsg(
+				guessIn > secretNum
+					? "Your number is too big"
+					: "Your number is too small"
+			);
+			score--;
+			scoreEl.textContent = score;
 		} else {
 			displayMsg("You lost the game 💀💀💀");
-			score.textContent = 0;
+			scoreEl.textContent = 0;
 		}
 	}
 }
