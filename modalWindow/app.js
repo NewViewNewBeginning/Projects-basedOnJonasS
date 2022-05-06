@@ -17,12 +17,19 @@ btnsOpen.forEach(function (btn) {
 	});
 });
 //Closing mod
-overlay.addEventListener('click',closeModal)
+overlay.addEventListener("click", closeModal);
 closeModalBtn.addEventListener("click", closeModal);
 
 document.onkeydown = function (e) {
 	e = e || window.event;
-	if (e.keyCode == 27) {
+	if (e.keyCode == 27 && !modal.classList.contains('hidden')) {
 		closeModal();
 	}
 };
+
+// Alt ver for closing modal with ESC btn
+// document.addEventListener("keyup", function (e) {
+// 	if (e.key === "Escape" && !modal.classList.contains('hidden') ) {
+// 		closeModal();
+// 	}
+// });
